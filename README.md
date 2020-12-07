@@ -1,5 +1,5 @@
 # weather_station
-This project is my home weather station hosted on a Raspberry Pi 3
+This project is my home weather station hosted on a Raspberry Pi 4
 Today it includes the following sensors:
 * Temperature
 * Barometric Pressure
