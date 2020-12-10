@@ -57,7 +57,7 @@ temperature_offset = -1
  
 while True:
     temp = int(bme680.temperature) + temperature_offset
-    pm25env = pm25.read()["pm25 env"]
+    pm25env = pm25.read()["particles 25um"]
     aqi = AQIPM25(pm25env)
     logger.log(aqi, (temp + temperature_offset) * 9/5 + 32, bme680.humidity, bme680.pressure / 33.864)
     time.sleep(60)
