@@ -54,10 +54,11 @@ bme680 = adafruit_bme680.Adafruit_BME680_I2C(i2c, debug=False)
 
 bme680.sea_level_pressure = 1013.21
 temperature_offset = -1
+pressure_offset = 0.38
  
 while True:
     temp = int(bme680.temperature) + temperature_offset
     pm25env = pm25.read()["particles 25um"]
     aqi = AQIPM25(pm25env)
-    logger.log(aqi, (temp + temperature_offset) * 9/5 + 32, bme680.humidity, bme680.pressure / 33.864)
+    logger.log(aqi, (temp + temperature_offset) * 9/5 + 32, bme680.humidity, (bme680.pressure / 33.864) + pressure_offset)
     time.sleep(60)
