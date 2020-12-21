@@ -52,6 +52,7 @@ i2c = busio.I2C(3,2)
 print(i2c.scan())
 bme680 = adafruit_bme680.Adafruit_BME680_I2C(i2c, debug=False)
 
+# Set some offsets to provide more accurate readings
 bme680.sea_level_pressure = 1013.21
 temperature_offset = -1
 pressure_offset = 0.38
