@@ -9,7 +9,7 @@ import adafruit_pm25
 
 #
 # https://www.airnow.gov/sites/default/files/custom-js/conc-aqi.js
-# the Adafruit Air Quality sensor returns vairous values, but none match Purple Air. This will translate
+# the Adafruit Air Quality sensor returns various values, but none match Purple Air. This will translate
 # the "pm25 standard" value from the sensor into the "US EPA PM2.5 AQI" value.
 #
 def Linear(AQIhigh, AQIlow, Conchigh, Conclow, Concentration):
@@ -25,7 +25,7 @@ def AQIPM25(Concentration):
     Conc=float(Concentration)
     c=(math.floor(10*Conc))/10
 
-    if (c>=0 and c<12.1):
+    if 0 <= c <= 12.1:
         AQI=Linear(50,0,12,0,c)
     elif (c>=12.1 and c<35.5):
         AQI=Linear(100,51,35.4,12.1,c)
@@ -52,10 +52,9 @@ i2c = busio.I2C(3,2)
 print(i2c.scan())
 bme680 = adafruit_bme680.Adafruit_BME680_I2C(i2c, debug=False)
 
-# Set some offsets to provide more accurate readings
-bme680.sea_level_pressure = 1013.21
+bme680.sea_level_pressure = 1030.5
 temperature_offset = -1
-pressure_offset = 0.38
+pressure_offset = 0.38 
  
 while True:
     temp = int(bme680.temperature) + temperature_offset

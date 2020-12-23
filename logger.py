@@ -53,13 +53,10 @@ air_body = [
 }
 ]
 
-
-
-
-
 client = InfluxDBClient('homeassistant.local', 8086, 'home_assistant', 'home_assistant', 'weather_station')
 
-client.create_database('weather_station')
+# Only required for first time this program was run
+#client.create_database('weather_station')
 
 def log(air, temp, humidity, pressure):
     temp_body[0]["time"] = strftime("%Y-%m-%d", gmtime())+"T"+strftime("%H:%M:%S", gmtime())+"Z"
@@ -71,12 +68,8 @@ def log(air, temp, humidity, pressure):
     humidity_body[0]["fields"]["humidity"] = humidity
     pressure_body[0]["fields"]["pressure"] = pressure
     air_body[0]["fields"]["airquality"] = air
+
     client.write_points(temp_body)
     client.write_points(humidity_body)
     client.write_points(pressure_body)
     client.write_points(air_body)
-    
-    """result = client.query('select value from weather_sensor;')
-
-    print("Result: {0}".format(result))
-    """
