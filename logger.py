@@ -48,7 +48,10 @@ air_body = [
     },
     "time": "2020-10-10T11:00:00Z",
     "fields": {
-        "airquality": 60.32
+        "airquality": 60.32,
+        "pm25_standard": 50.00,
+        "pm25_env": 50.00,
+        "pm25_um":  50.00
     }
 }
 ]
@@ -59,7 +62,7 @@ client = InfluxDBClient('homeassistant.local', 8086, 'home_assistant', 'home_ass
 # client.create_database('weather_station')
 
 
-def log(air, temp, humidity, pressure):
+def log(aqi, pm25_standard, pm25_env, pm25_um, temp, humidity, pressure):
     temp_body[0]["time"] = strftime("%Y-%m-%d", gmtime())+"T"+strftime("%H:%M:%S", gmtime())+"Z"
     humidity_body[0]["time"] = strftime("%Y-%m-%d", gmtime())+"T"+strftime("%H:%M:%S", gmtime())+"Z"
     pressure_body[0]["time"] = strftime("%Y-%m-%d", gmtime())+"T"+strftime("%H:%M:%S", gmtime())+"Z"
@@ -68,7 +71,10 @@ def log(air, temp, humidity, pressure):
     temp_body[0]["fields"]["temp"] = temp
     humidity_body[0]["fields"]["humidity"] = humidity
     pressure_body[0]["fields"]["pressure"] = pressure
-    air_body[0]["fields"]["airquality"] = air
+    air_body[0]["fields"]["airquality"] = aqi
+    air_body[0]["fields"]["pm25_standard"] = pm25_standard
+    air_body[0]["fields"]["pm25_env"] = pm25_env
+    air_body[0]["fields"]["pm25_um"] = pm25_um
 
     # wrap all these write calls around a try block
     try:

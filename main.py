@@ -59,9 +59,17 @@ pressure_offset = 0.38
  
 while True:
     temp = int(bme680.temperature) + temperature_offset
-    pm25env = pm25.read()["particles 25um"]
-    aqi = aqi_pm25(pm25env)
+    # Example on how to setup air quality reading
+    # https://github.com/adafruit/Adafruit_CircuitPython_PM25/blob/main/examples/pm25_simpletest.py
+    aqdata = pm25.read()
+    pm25_standard = aqdata["pm25 standard"]
+    pm25_env = aqdata["pm25 env"]
+    pm25_um = aqdata["particles 25um"]
+    aqi = aqi_pm25(pm25_standard)
     logger.log(aqi,
+               pm25_standard,
+               pm25_env,
+               pm25_um,
                (temp + temperature_offset) * 9/5 + 32,
                bme680.humidity,
                (bme680.pressure / 33.864) + pressure_offset)
